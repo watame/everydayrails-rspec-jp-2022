@@ -25,3 +25,37 @@ Gitが苦手な方は、GitHubの便利な ブランチ機能を利用してく�
 フィルターで特定のブランチを選択し、オンラインでソースコードをブラウズすることができます。
 
 Gitについてもっと詳しく知りたい方は、無料で公開されている「 [Git Immersion](http://gitimmersion.com/) 」または「 [Try Git](http://www.codeschool.com/courses/try-git) 」（いずれも英語版）がお勧めです。
+
+# Dockerでの利用方法
+以下のステップでdocker-composeでの利用が可能
+
+1.コンテナイメージの作成
+```
+$ docker-compose build
+```
+
+2.DBの初期設定
+```
+$ docker-compose run app bin/setup
+```
+
+3.JavaScriptモジュール管理ソフトのインストール
+```
+$ docker-compose run app yarn install
+```
+
+3.5.`Procfile.dev`の更新
+```ruby
+# webのjob定義に-b '0.0.0.0'を付与する
+web: bin/rails server -p 3000 -b '0.0.0.0'
+```
+
+4.コンテナでの開発サーバ起動
+```
+$ docker-compose up
+```
+
+5.RSpecの実施
+```
+$ docker-compose run rspec
+```
