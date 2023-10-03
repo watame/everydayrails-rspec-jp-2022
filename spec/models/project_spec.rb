@@ -54,4 +54,35 @@ RSpec.describe Project, type: :model do
 
     expect(other_project).to be_valid
   end
+
+  # プロジェクトが遅れているかを確認する
+  context 'check project is late' do
+    let(:now) { Time.current }
+
+    # 期限内のとき
+    context 'when on schedule' do
+      # trueが戻されること
+      it "return false" do
+        project = @user.projects.build(
+          name: "Test Project",
+          due_on: now.tomorrow,
+        )
+
+        expect(project.late?).to eq false
+      end
+    end
+
+    # 期限切れのとき
+    context 'when outdated' do
+      # falseが戻されること
+      it "return true" do
+        project = @user.projects.build(
+          name: "Test Project",
+          due_on: now.yesterday,
+        )
+
+        expect(project.late?).to eq true
+      end
+    end
+  end
 end
