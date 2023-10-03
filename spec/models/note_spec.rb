@@ -63,7 +63,7 @@ RSpec.describe Note, type: :model do
     # 一致するデータが1件も見つからないとき
     context "when no match is found" do
       # 検索結果が1件も見つからなければ空のコレクションを返すこと
-      it "returns notes that match the search term" do
+      it "returns an empty collection" do
         expect(Note.search("message")).to be_empty
       end
     end
