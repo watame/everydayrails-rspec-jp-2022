@@ -55,34 +55,24 @@ RSpec.describe Project, type: :model do
     expect(other_project).to be_valid
   end
 
-  # プロジェクトが遅れているかを確認する
-  context 'check project is late' do
-    let(:now) { Time.current }
-
-    # 期限内のとき
-    context 'when on schedule' do
-      # trueが戻されること
-      it "return false" do
-        project = @user.projects.build(
-          name: "Test Project",
-          due_on: now.tomorrow,
-        )
-
-        expect(project.late?).to eq false
-      end
+  # 遅延ステータス
+  context "late status" do
+    # 締切日が過ぎていれば遅延していること
+    it "is late when the due date is past today" do
+      project = FactoryBot.create(:project, :due_yesterday)
+      expect(project).to be_late
     end
 
-    # 期限切れのとき
-    context 'when outdated' do
-      # falseが戻されること
-      it "return true" do
-        project = @user.projects.build(
-          name: "Test Project",
-          due_on: now.yesterday,
-        )
+    # 締切日が今日ならスケジュールどおりであること
+    it "is on time when the due date is today" do
+      project = FactoryBot.create(:project, :due_today)
+      expect(project).to_not be_late
+    end
 
-        expect(project.late?).to eq true
-      end
+    # 締切日が未来ならスケジュールどおりであること
+    it "is on time when the due date is in the future" do
+      project = FactoryBot.create(:project, :due_tomorrow)
+      expect(project).to_not be_late
     end
   end
 end
