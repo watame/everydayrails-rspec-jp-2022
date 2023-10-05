@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
+  # 有効なファクトリを持つこと
+  it "has a valid factory" do
+    expect(FactoryBot.build(:project)).to be_valid
+  end
 
   # プロジェクト名がなければ登録できないこと
   it "is invalid without a name" do
