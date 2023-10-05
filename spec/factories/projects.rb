@@ -6,6 +6,11 @@ FactoryBot.define do
     # projectはownerというエイリアスが設定されている
     association :owner
 
+    # メモ付きのプロジェクト
+    trait :with_notes do
+      after(:create) { |project| create_list(:note, 5, project: project) }
+    end
+
     # 昨日が締め切り
     trait :due_yesterday do
       due_on { 1.day.ago }
