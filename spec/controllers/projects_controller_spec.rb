@@ -102,7 +102,7 @@ RSpec.describe ProjectsController, type: :controller do
         }.to change(@user.projects, :count).by(1)
       end
 
-      # 200レスポンスを返すこと
+      # 302レスポンスを返すこと
       it "returns a 302 response" do
         project_params = FactoryBot.attributes_for(:project)
         sign_in @user
